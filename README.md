@@ -12,7 +12,6 @@ front-end: index.html( simple html file)
 ## Installation
 
     - clone the repo
-[clone](https://github.com/Wishvanath/node_chat_app.git)
     - navigate to the project folder and do npm install
     - npm start
     - open index.html file in your browser
