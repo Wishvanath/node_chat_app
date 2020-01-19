@@ -8,19 +8,19 @@ Demenstration :Dataflow in single page application using (socket.io)
 Server: Node.js
 front-end: index.html( simple html file)
 
-[API URL](https://github.com/Wishvanath/node_chat_app.git)
 
 ## Installation
 
     - clone the repo
+[clone](https://github.com/Wishvanath/node_chat_app.git)
     - navigate to the project folder and do npm install
     - npm start
-    - opent index.html file in your browser
+    - open index.html file in your browser
 
 ## Need to Improve
 
-    - in first page we can give (user name and char room options)
-    - Ram chat box must be display in single page
-    - another user will have their own room where he can see all the message and even user list.
-    - imporove the message box
-    - display options (send message and receive message) on the screen
+    - The first page we can give (user name and chat room options where new user can join)
+    - Each chat-box(Room) must be display in single page.
+    - Another user will have their own room where he can see all the message and even user list.
+    - Imporove the style of message box.
+    - Display options style (send message and receive message) on the screen.
