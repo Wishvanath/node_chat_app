@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Chat app</title>
+    <style>
+        .chat_wrapper {
+            background: #eee;
+            height: 100vh;
+        }
+
+        .chat_wrapper_inner {
+            padding-top: 30px;
+        }
+
+        .chat_box_container {
+            height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+            border-bottom: none;
+            border-radius: initial;
+        }
+        #rahim_textarea,
+        #ram_textarea{
+            border-radius: initial;
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="chat_wrapper">
+        <div class="container chat_wrapper_inner">
+            <div class="row">
+
+                <div class="col-sm-6">
+                    <h1 class="text-center">Ram</h1>
+                    <div class="ram_chat_wrapper">
+                        <div class="card chat_box_container" id="ram_message">
+
+                        </div>
+                        <textarea placeholder="Type Here.." class="form-control" id="ram_textarea"></textarea>
+                    </div>
+                </div>
+
+
+                <div class="col-sm-6">
+                    <h1 class="text-center">Rahim</h1>
+                    <div class="rahim_chat_wrapper">
+                        <div class="card chat_box_container" id="rahim_message">
+
+                        </div>
+                        <textarea placeholder="Type Here.." class="form-control" id="rahim_textarea"></textarea>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- socket.io client CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.dev.js"></script>
+
+    <!-- communication to the server logic -->
+    <script>
+        (function () {
+
+            // get the DOM element
+            var element = function (id) {
+                return (document.getElementById(id))
+            }
+
+            var ram_input = element('ram_textarea');
+            var ram_message = element('ram_message');
+            var rahim_input = element('rahim_textarea');
+            var rahim_message = element('rahim_message')
+
+            // connect to socket (BACKEND)
+            var socket = io.connect('http://127.0.0.1:5000');
+            if (socket !== undefined) {
+                console.log("Connected to Socket");
+
+                // get ram message    
+                socket.on('ram_output', function (data) {
+                   console.log(data)
+                   if (data.length) {
+                        for (var x = 0; x < data.length; x++) {
+                            //build the new message div
+                            var message = document.createElement('div');
+                            message.setAttribute('class', 'chat_message');
+                            message.textContent = data[x].name + " : " + data[x].message;
+                            rahim_message.appendChild(message);
+                            rahim_message.insertBefore(message, rahim_message.firstChild);
+                        }
+                    }
+                })
+                
+                //get rahim message
+                socket.on('rahim_output', function (data) {
+                   console.log(data)
+                   if (data.length) {
+                        for (var x = 0; x < data.length; x++) {
+                            //build the new message div
+                            var message = document.createElement('div');
+                            message.setAttribute('class', 'chat_message');
+                            message.textContent = data[x].name + " : " + data[x].message;
+                            ram_message.appendChild(message);
+                            ram_message.insertBefore(message, ram_message.firstChild);
+                        }
+                    }
+                })
+
+
+
+                //handle the input event
+                ram_input.addEventListener('keydown', function (event) {
+                    //when user type enter keys
+                    console.log("event is calling")
+                    if (event.which === 13 && event.shiftKey == false) {
+                        socket.emit('ram_input', {
+                            name: "Ram",
+                            message: ram_input.value
+                        })
+                        event.preventDefault();
+                        ram_input.value = '';
+                    }
+                })
+                //
+                rahim_input.addEventListener('keydown', function (event) {
+                    //when user type enter keys
+                    console.log("event is calling")
+                    if (event.which === 13 && event.shiftKey == false) {
+                        socket.emit('rahim_input', {
+                            name: "Rahim",
+                            message: rahim_input.value
+                        })
+                        event.preventDefault();
+                        rahim_input.value = '';
+                    }
+                })
+
+
+
+            }//end of if
+        })();
+    </script>
+
+
+
+
+
+
+</body>
+
+</html>
