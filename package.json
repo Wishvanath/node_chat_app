@@ -1,0 +1,19 @@
+{
+  "name": "nodejs_chatapp",
+  "version": "1.0.0",
+  "description": "single page chat application using socket.io",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Wishvanath/node_chat_app.git"
+  },
+  "author": "Wishvanath",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Wishvanath/node_chat_app/issues"
+  },
+  "homepage": "https://github.com/Wishvanath/node_chat_app#readme"
+}
